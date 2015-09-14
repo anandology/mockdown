@@ -18,7 +18,7 @@ requirements = [
 
 setup(
     name='Mockdown',
-    version='0.1.0',
+    version='0.1.0-dev',
     description='HTML mockups simplified!',
     long_description=readme,
     author='Anand Chitipothu',
