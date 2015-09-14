@@ -37,6 +37,8 @@ def mock(path=""):
         return mock_index(path)
     elif path.endswith(".html"):
         return mock_html(path)
+    elif path.endswith(".yml"):
+        return mock_yaml(path)
     else:
         abort(404)
 
@@ -61,6 +63,13 @@ def mock_html(path):
     response = make_response(html)
     return response
 
+def mock_yaml(path):
+    yaml_text = read_yaml_file(path)
+    response = make_response(yaml_text)
+    response.headers['Content-Type'] = 'text/yaml'
+    return response
+
+
 def render_mock_template(path, **kwargs):
     t = env.get_template(path)
     return t.render(**kwargs)
@@ -78,16 +87,19 @@ def generate_unique_number(text):
 
 def read_arguments(html_path):
     yaml_path = replace_ext(html_path, ".yml")
+    yaml_text = read_yaml_file(yaml_path)
+    return yaml.safe_load(StringIO(yaml_text))
+
+def read_yaml_file(yaml_path):
     if not os.path.exists(yaml_path):
-        return {}
+        return '{}'
 
     # Pass the yaml text through jinja to make it possible to include fake data
     fake = Faker()
     # generate a seed from the filename so that we always get the same data
     fake.seed(generate_unique_number(yaml_path))
     yaml_text = render_mock_template(yaml_path, fake=fake)
-
-    return yaml.safe_load(StringIO(yaml_text))
+    return yaml_text
 
 def main():
     app.run()
