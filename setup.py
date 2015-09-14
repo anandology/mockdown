@@ -17,23 +17,23 @@ requirements = [
 ]
 
 setup(
-    name='mocker',
+    name='Mockdown',
     version='0.1.0',
     description='HTML mockups simplified!',
     long_description=readme,
     author='Anand Chitipothu',
     author_email='anandology@gmail.com',
-    url='https://github.com/anandology/mocker',
+    url='https://github.com/anandology/mockdown',
     packages=[
-        'mocker',
+        'mockdown',
     ],
-    package_dir={'mocker':
-                 'mocker'},
+    package_dir={'mockdown':
+                 'mockdown'},
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
     zip_safe=False,
-    keywords='mocker',
+    keywords='mockdown',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -48,6 +48,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        mocker=mocker:main
+        mockdown=mockdown:main
     '''
 )
