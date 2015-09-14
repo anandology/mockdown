@@ -1,0 +1,12 @@
+<h1>{{path or "Home"}}</h1>
+<ul>
+	{% if path %}
+		<li><a href="{{url_for('.mock', path=parent)}}">../</a></li>
+	{% endif %}
+	{% for d in dirs %}
+		<li><a href="{{url_for('.mock', path=d)}}">{{basename(d)}}/</a></li>
+	{% endfor %}
+	{% for f in htmlfiles %}
+		<li><a href="{{url_for('.mock', path=f)}}">{{basename(f)}}</a></li>
+	{% endfor %}
+</ul>
