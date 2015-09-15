@@ -8,6 +8,7 @@ from jinja2 import Template, FileSystemLoader, Environment
 class Mockdown:
     def __init__(self, root):
         self.set_root(root)
+        self.template_globals = {}
 
     def set_root(self, root):
         self.root = root
@@ -34,6 +35,7 @@ class Mockdown:
         """
         env = self._get_env()
         t = env.get_template(path)
+        kwargs.update(self.template_globals)
         kwargs['fake'] = self.get_fake(str(path))
         return t.render(**kwargs)
 

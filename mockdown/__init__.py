@@ -6,11 +6,12 @@
    Tool to simplify creating HTML mockups.
 """
 import os
+import sys
 import glob
 import hashlib
 from StringIO import StringIO
 
-from flask import Flask, Blueprint, render_template, make_response, abort
+from flask import Flask, Blueprint, render_template, make_response, abort, redirect, url_for
 import yaml
 import pathlib
 from .mockdown import Mockdown
@@ -19,6 +20,14 @@ mockdown_app = Blueprint("mockdown", __name__,
                          template_folder="templates")
 
 _mockdown = Mockdown(root=".")
+
+def mockdown_url_for(endpoint, **kwargs):
+    if endpoint == 'static':
+        return url_for('static', **kwargs)
+    else:
+        return url_for('.mock', path=endpoint + ".html")
+
+_mockdown.template_globals['url_for'] = mockdown_url_for
 
 @mockdown_app.route("/")
 @mockdown_app.route("/<path:path>")
