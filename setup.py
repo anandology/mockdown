@@ -13,7 +13,8 @@ requirements = [
     'Flask>=0.10',
     'Jinja2>=2.4',
     'PyYAML>=3.11',
-    'fake-factory>=0.5.2'
+    'fake-factory>=0.5.2',
+    'pathlib==1.0.1'
 ]
 
 setup(
