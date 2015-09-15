@@ -34,6 +34,7 @@ class Mockdown:
         """
         env = self._get_env()
         t = env.get_template(path)
+        kwargs['fake'] = self.get_fake(str(path))
         return t.render(**kwargs)
 
     def read_arguments(self, html_path):
@@ -47,12 +48,18 @@ class Mockdown:
         if not self.exists(path):
             return '{}'
 
+        fake = self.get_fake(str(path))
+        yaml_text = self._render_template(path, fake=fake)
+        return yaml_text
+
+    def get_fake(self, filename):
+        """Returns a fake object with seed set using the filename.
+        """
         # Pass the yaml text through jinja to make it possible to include fake data
         fake = Faker()
         # generate a seed from the filename so that we always get the same data
-        fake.seed(self._generate_seed(str(path)))
-        yaml_text = self._render_template(path, fake=fake)
-        return yaml_text
+        fake.seed(self._generate_seed(str(filename)))
+        return fake
 
     def _generate_seed(self, seed_text):
         """Generates unique integer seed from given text.
