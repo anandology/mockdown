@@ -56,9 +56,11 @@ class Mockdown:
 
     def _resolve_includes(self, data):
         includes = data.pop("_includes", [])
+        d = {}
         for path in includes:
-            data.update(self.read_yaml_file(path))
-        return data
+            d.update(self.read_yaml_file(path))
+        d.update(data)
+        return d
 
     def get_fake(self, filename):
         """Returns a fake object with seed set using the filename.

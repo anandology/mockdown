@@ -51,4 +51,12 @@ class TestMockdown:
             "  - 'a.yml'\n")
         assert m.read_yaml_file("b.yml") == {"x": 1, "y": 2, "z": 3}
 
+    def test_include_overwrites(self, tmpdir):
+        m = Mockdown(tmpdir.strpath)
+        tmpdir.join("a.yml").write("x: 1\ny: 2\n")
+        tmpdir.join("b.yml").write(
+            "x: 3\n" +
+            "_includes:\n" +
+            "  - 'a.yml'\n")
+        assert m.read_yaml_file("b.yml") == {"x": 3, "y": 2}
 
