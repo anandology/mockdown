@@ -60,3 +60,8 @@ class TestMockdown:
             "  - 'a.yml'\n")
         assert m.read_yaml_file("b.yml") == {"x": 3, "y": 2}
 
+    def test_deep_include(self, tmpdir):
+        m = Mockdown(tmpdir.strpath)
+        tmpdir.join("a.yml").write("x: 1\ny: 2\n")
+        tmpdir.join("b.yml").write("data: {{include('a.yml')}}")
+        assert m.read_yaml_file("b.yml") == {"data": {"x": 1, "y": 2}}

@@ -1,5 +1,6 @@
 import hashlib
 import pathlib
+import json
 import yaml
 from faker import Faker
 from StringIO import StringIO
@@ -50,9 +51,16 @@ class Mockdown:
             return {}
 
         fake = self.get_fake(str(path))
-        yaml_text = self._render_template(path, fake=fake)
+        yaml_text = self._render_template(path, fake=fake, include=self.include_function)
         data = yaml.safe_load(StringIO(yaml_text))
         return self._resolve_includes(data)
+
+    def include_function(self, filename):
+        """Function made available in the templates to support including data from other files.
+        """
+        data = self.read_yaml_file(filename)
+        # JSON is valid YAML and it doesn't interfere with indentation
+        return json.dumps(data)
 
     def _resolve_includes(self, data):
         includes = data.pop("_includes", [])
