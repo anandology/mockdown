@@ -1,0 +1,17 @@
+# Config file for automatic testing at travis-ci.org
+
+language: python
+
+python:
+  #- "3.4"
+  #- "3.3"
+  - "2.7"
+  #- "2.6"
+  #- "pypy"
+
+install: pip install tox pytest -r requirements.txt
+
+script: tox
+
+sudo: false
+
