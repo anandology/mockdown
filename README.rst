@@ -1,6 +1,9 @@
 Mockdown - HTML mockups simplified!
 ===================================
 
+.. image:: https://travis-ci.org/anandology/mockdown.svg?branch=master
+    :target: https://travis-ci.org/anandology/mockdown
+
 What is Mockdown
 ----------------
 
