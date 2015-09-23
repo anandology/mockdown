@@ -39,7 +39,8 @@ def mock(path=""):
     elif path.endswith(".html"):
         return _mockdown.render_template(path)
     elif path.endswith(".yml"):
-        return _mockdown.read_yaml_file(path)
+        data = _mockdown.read_yaml_file(path)
+        return yaml.dump(data)
     else:
         print "aborting..."
         abort(404)

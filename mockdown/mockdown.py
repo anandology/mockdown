@@ -43,16 +43,15 @@ class Mockdown:
         """Reads arguments for rendering template at specified path.
         """
         yaml_path = self._with_suffix(html_path, ".yml")
-        yaml_text = self.read_yaml_file(yaml_path)
-        return yaml.safe_load(StringIO(yaml_text))
+        return self.read_yaml_file(yaml_path)
 
     def read_yaml_file(self, path):
         if not self.exists(path):
-            return '{}'
+            return {}
 
         fake = self.get_fake(str(path))
         yaml_text = self._render_template(path, fake=fake)
-        return yaml_text
+        return yaml.safe_load(StringIO(yaml_text))
 
     def get_fake(self, filename):
         """Returns a fake object with seed set using the filename.
