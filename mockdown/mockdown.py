@@ -51,7 +51,14 @@ class Mockdown:
 
         fake = self.get_fake(str(path))
         yaml_text = self._render_template(path, fake=fake)
-        return yaml.safe_load(StringIO(yaml_text))
+        data = yaml.safe_load(StringIO(yaml_text))
+        return self._resolve_includes(data)
+
+    def _resolve_includes(self, data):
+        includes = data.pop("_includes", [])
+        for path in includes:
+            data.update(self.read_yaml_file(path))
+        return data
 
     def get_fake(self, filename):
         """Returns a fake object with seed set using the filename.

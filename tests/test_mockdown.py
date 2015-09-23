@@ -41,3 +41,14 @@ class TestMockdown:
         monkeypatch.setattr(m, "get_fake", lambda filename: FakeFake())
         tmpdir.join("a.yml").write("name: {{fake.name()}}")
         assert m.read_yaml_file("a.yml") == {"name": "fake-name"}
+
+    def test_includes(self, tmpdir):
+        m = Mockdown(tmpdir.strpath)
+        tmpdir.join("a.yml").write("x: 1\ny: 2\n")
+        tmpdir.join("b.yml").write(
+            "z: 3\n" +
+            "_includes:\n" +
+            "  - 'a.yml'\n")
+        assert m.read_yaml_file("b.yml") == {"x": 1, "y": 2, "z": 3}
+
+
