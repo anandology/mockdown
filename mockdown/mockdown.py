@@ -3,7 +3,7 @@ import pathlib
 import json
 import yaml
 from faker import Faker
-from StringIO import StringIO
+from io import StringIO
 from jinja2 import Template, FileSystemLoader, Environment
 
 class Mockdown:
@@ -82,7 +82,7 @@ class Mockdown:
     def _generate_seed(self, seed_text):
         """Generates unique integer seed from given text.
         """
-        return int(hashlib.md5(seed_text).hexdigest(), 16) % 10000
+        return int(hashlib.md5(seed_text.encode('utf-8')).hexdigest(), 16) % 10000
 
     def get_relative_path(self, path):
         """Returns the path relative to the Mockdown root for the given path.

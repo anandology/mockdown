@@ -13,13 +13,13 @@ requirements = [
     'Flask>=0.10',
     'Jinja2>=2.4',
     'PyYAML>=3.11',
-    'fake-factory>=0.5.2',
+    'Faker>=0.7.7',
     'pathlib==1.0.1'
 ]
 
 setup(
     name='Mockdown',
-    version='0.1.0-dev',
+    version='0.1.0-dev1',
     description='HTML mockups simplified!',
     long_description=readme,
     author='Anand Chitipothu',
@@ -41,7 +41,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',

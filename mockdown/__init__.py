@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-   Mocker
-   ~~~~~~
+   Mockdown
+   ~~~~~~~~
 
    Tool to simplify creating HTML mockups.
 """
@@ -9,7 +9,8 @@ import os
 import sys
 import glob
 import hashlib
-from StringIO import StringIO
+
+from io import StringIO
 
 from flask import Flask, Blueprint, render_template, make_response, abort, redirect, url_for
 import yaml
@@ -42,7 +43,7 @@ def mock(path=""):
         data = _mockdown.read_yaml_file(path)
         return yaml.dump(data)
     else:
-        print "aborting..."
+        print("aborting...")
         abort(404)
 
 def mock_index(path):

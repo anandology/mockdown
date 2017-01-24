@@ -2,5 +2,5 @@ wheel==0.23.0
 Flask>=0.10
 Jinja2>=2.4
 PyYAML>=3.11
-fake-factory>=0.5.2
+Faker>=0.7.7
 pathlib==1.0.1
