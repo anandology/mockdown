@@ -60,7 +60,9 @@ def main():
     if len(sys.argv) > 1:
         _mockdown.root = sys.argv[1]
 
-    app = Flask(__name__)
+    static_folder = os.path.join(os.getcwd(), "static")
+
+    app = Flask(__name__, static_folder=static_folder)
     app.config['DEBUG'] = True
     app.register_blueprint(mockdown_app)
     app.run()
