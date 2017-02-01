@@ -2,6 +2,7 @@ import hashlib
 import pathlib
 import json
 import yaml
+import os
 from faker import Faker
 from io import StringIO
 from jinja2 import Template, FileSystemLoader, Environment
@@ -89,7 +90,7 @@ class Mockdown:
 
         Path can be a string or a Path object. The return value will always be a string.
         """
-        if isinstance(path, basestring):
+        if isinstance(path, str):
             path = pathlib.Path(path)
 
         rpath = path.relative_to(self.root)
@@ -107,3 +108,29 @@ class Mockdown:
         """Returns a new path as string after replacing the suffix in the path with given suffix.
         """
         return str(pathlib.Path(path).with_suffix(suffix))
+
+    def build(self):
+        files = (f for f in self._find_files(self.root) if f.endswith(".html"))
+        build_dir = pathlib.Path(self.root, "_build")
+        build_dir.mkdir(exist_ok=True)
+
+        # TODO: fix the following unix only command
+        os.system("cd _build && ln -sf ../static .")
+
+        for f in files:
+            path = build_dir.joinpath(f)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            print("generating", str(path))
+            html = self.render_template(f)
+            path.write_text(html, encoding="utf-8")
+
+    def _find_files(self, root):
+        for dirname, subdirs, filenames in os.walk(root):
+            # ignore all dirs starting with _, used to skip dirs like _build
+            subdirs[:] = [d for d in subdirs if not d.startswith("_")]
+
+            # yield relative path of all .html files
+            for f in filenames:
+                if f.endswith(".html"):
+                    path = os.path.join(dirname, f)
+                    yield self.get_relative_path(path)

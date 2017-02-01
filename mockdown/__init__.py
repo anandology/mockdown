@@ -57,6 +57,12 @@ def mock_index(path):
     return render_template("index.html", root=root, path=path, subdirs=subdirs, filenames=filenames)
 
 def main():
+    if "--build" in sys.argv:
+        build = True
+        sys.argv.remove("--build")
+    else:
+        build = False
+
     if len(sys.argv) > 1:
         _mockdown.root = sys.argv[1]
 
@@ -65,4 +71,9 @@ def main():
     app = Flask(__name__, static_folder=static_folder)
     app.config['DEBUG'] = True
     app.register_blueprint(mockdown_app)
-    app.run()
+
+    if build:
+        with app.test_request_context():
+            _mockdown.build()
+    else:
+        app.run()
