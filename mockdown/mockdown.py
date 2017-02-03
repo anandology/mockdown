@@ -1,8 +1,11 @@
+from __future__ import print_function
+import sys
+import os
+import traceback
 import hashlib
 import pathlib
 import json
 import yaml
-import os
 from faker import Faker
 from io import StringIO
 from jinja2 import Template, FileSystemLoader, Environment
@@ -121,8 +124,12 @@ class Mockdown:
             path = build_dir.joinpath(f)
             path.parent.mkdir(parents=True, exist_ok=True)
             print("generating", str(path))
-            html = self.render_template(f)
-            path.write_text(html, encoding="utf-8")
+            try:
+                html = self.render_template(f)
+                path.write_text(html, encoding="utf-8")
+            except Exception:
+                print("Failed to build", str(path), file=sys.stderr)
+                traceback.print_exc()
 
     def _find_files(self, root):
         for dirname, subdirs, filenames in os.walk(root):
