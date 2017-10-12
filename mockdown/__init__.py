@@ -5,14 +5,7 @@
 
    Tool to simplify creating HTML mockups.
 """
-import os
-import sys
-import glob
-import hashlib
-
-from io import StringIO
-
-from flask import Flask, Blueprint, render_template, make_response, abort, redirect, url_for
+from flask import Blueprint, render_template, abort, redirect, url_for
 import yaml
 import pathlib
 from .mockdown import Mockdown
@@ -56,24 +49,3 @@ def mock_index(path):
     filenames = [f.name for f in pathobj.glob("*.html")]
     return render_template("index.html", root=root, path=path, subdirs=subdirs, filenames=filenames)
 
-def main():
-    if "--build" in sys.argv:
-        build = True
-        sys.argv.remove("--build")
-    else:
-        build = False
-
-    if len(sys.argv) > 1:
-        _mockdown.root = sys.argv[1]
-
-    static_folder = os.path.join(os.getcwd(), "static")
-
-    app = Flask(__name__, static_folder=static_folder)
-    app.config['DEBUG'] = True
-    app.register_blueprint(mockdown_app)
-
-    if build:
-        with app.test_request_context():
-            _mockdown.build()
-    else:
-        app.run()

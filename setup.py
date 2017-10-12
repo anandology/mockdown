@@ -19,7 +19,7 @@ requirements = [
 
 setup(
     name='Mockdown',
-    version='0.1.0-dev3',
+    version='0.1.0-dev4',
     description='HTML mockups simplified!',
     long_description=readme,
     author='Anand Chitipothu',
@@ -50,6 +50,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        mockdown=mockdown:main
+        mockdown=mockdown.app:main
     '''
 )

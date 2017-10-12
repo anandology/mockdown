@@ -8,7 +8,7 @@ import json
 import yaml
 from faker import Faker
 from io import StringIO
-from jinja2 import Template, FileSystemLoader, Environment
+from jinja2 import FileSystemLoader, Environment
 
 class Mockdown:
     def __init__(self, root):
