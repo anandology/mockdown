@@ -19,7 +19,7 @@ requirements = [
 
 setup(
     name='Mockdown',
-    version='0.1.0-dev4',
+    version='0.1.0-dev5',
     description='HTML mockups simplified!',
     long_description=readme,
     author='Anand Chitipothu',
@@ -30,6 +30,9 @@ setup(
     ],
     package_dir={'mockdown':
                  'mockdown'},
+   package_data={
+      'mockdown': ['mockdown/templates/*'],
+   },
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
