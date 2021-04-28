@@ -13,13 +13,13 @@ requirements = [
     'Flask>=0.10',
     'Jinja2>=2.4',
     'PyYAML>=3.11',
-    'Faker>=0.7.7',
+    'Faker>=5.0.0',
     'pathlib==1.0.1'
 ]
 
 setup(
     name='Mockdown',
-    version='0.1.0-dev5',
+    version='0.1.0-dev6',
     description='HTML mockups simplified!',
     long_description=readme,
     author='Anand Chitipothu',
